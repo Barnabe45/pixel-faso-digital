@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+  url      = env("DATABASE_URL") // ❌ Cette ligne est manquante !
+  
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Le mot de passe sera haché (bcryptjs ou argon2)
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ProjectType {
+  WEB       // Pour les sites vitrines, SaaS, E-commerce
+  MOBILE    // Pour les applications iOS/Android
+}
+
+model Project {
+  id           String      @id @default(cuid())
+  title        String
+  description  String
+  type         ProjectType @default(WEB)
+  category     String      // ex: "E-Commerce", "SaaS", "Fintech"
+  tech         String[]    // Tableau de technologies, ex: ["Next.js", "Prisma"]
+  coverDesktop String?     // URL Vercel Blob de l'image Desktop/Tablette
+  coverMobile  String?     // URL Vercel Blob de l'image Mobile
+  liveUrl      String?     // Lien direct vers le site ou le Store
+  isFeatured   Boolean     @default(true) // Pour l'afficher sur l'accueil
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}

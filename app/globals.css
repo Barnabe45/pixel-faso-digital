@@ -1,26 +1,71 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-pixel-bg: #fafafe; /* Fond ultra-clair moderne */
+  --color-pixel-surface: #ffffff; /* Blanc pur pour les composants isolés */
+  --color-pixel-text: #2d004b; /* Le violet très sombre de ton logo */
+  --color-pixel-primary: #ff0080; /* Le magenta vif du logo pour les actions */
+  --color-pixel-muted: #6b5b7b; /* Un violet-gris adouci pour les textes secondaires */
+  --color-pixel-border: #e2d9ec; /* Une bordure fine et discrète */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: var(--color-pixel-bg);
+  color: var(--color-pixel-text);
+  /* Trame fine en arrière-plan */
+  background-image:
+    linear-gradient(rgba(45, 0, 75, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 0, 75, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(45, 0, 75, 0.06);
+}
+
+/* Grille technique et géométrique propre au thème Pixel */
+.grid-background {
+  position: relative;
+  background-color: var(--color-pixel-bg);
+  background-image:
+    linear-gradient(rgba(255, 0, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(45, 0, 75, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 0, 75, 0.01) 1px, transparent 1px);
+  background-size:
+    40px 40px,
+    40px 40px,
+    120px 120px,
+    120px 120px;
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 0, 128, 0.04) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(45, 0, 75, 0.03) 1px, transparent 2px);
+  background-size: 45px 45px;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 5s ease-in-out infinite;
 }
