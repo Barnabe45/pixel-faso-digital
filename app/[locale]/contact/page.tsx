@@ -1,13 +1,10 @@
 // app/contact/page.tsx
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+
 import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 
 export default function ContactPage() {
   return (
     <>
-      <Navbar />
-
       <main className="pt-24 bg-pixel-bg text-pixel-text min-h-screen">
         <div className="max-w-7xl mx-auto px-6 py-16">
           {/* En-tête de page */}
@@ -195,8 +192,6 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }

@@ -1,7 +1,4 @@
 // app/projets/page.tsx
-
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
 
 const projects = [
@@ -29,7 +26,6 @@ const projects = [
 export default function ProjetsPage() {
   return (
     <>
-      <Navbar />
       <main className="pt-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="max-w-3xl mb-16">
@@ -88,7 +84,6 @@ export default function ProjetsPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

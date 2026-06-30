@@ -2,102 +2,58 @@
 import { Code2, Smartphone, Globe, Zap, Shield } from "lucide-react";
 import Image from "next/image";
 
-const services = [
-  {
-    icon: Code2,
-    title: "Sites Vitrines",
-    description:
-      "Sites vitrines, landing pages, sites web pour la présentation de votre entreprise.",
-    src: "/site-images/website-illustration.jpg",
-    advantages: [
-      "1 nom de domaine offert",
-      "Plus de 5 pages",
-      "1 à 2 adresses email professionnelles offertes",
-      "Référencement naturel (SEO) de base",
-      "Sécurité renforcée",
-      "Design adapté à votre identité",
-    ],
-    price: "99 000 - 200 000 FCFA",
-  },
-  {
-    icon: Smartphone,
-    title: "Applications Mobiles",
-    description:
-      "Apps iOS & Android fluides et performantes développées avec React Native et Expo.",
-    src: "/site-images/mobile-app-illustration.jpg",
-    advantages: [
-      "Design adapté à votre identité",
-      "Apps iOS & Android avec une seule base de code",
-      "Haute sécurité des données",
-      "Publication sur les stores (App Store & Play Store)",
-    ],
-    price: "200 000 - 1 000 000 FCFA",
-  },
-  {
-    icon: Globe,
-    title: "Sites E-commerce",
-    description:
-      "Boutiques en ligne modernes, ultra-rapides et optimisées pour maximiser vos conversions.",
-    src: "/site-images/e-commerce-illustration.jpg",
-    advantages: [
-      "1 nom de domaine offert",
-      "Adresses emails professionnelles illimitées",
-      "Système de paiement intégré (Mobile Money, Cartes)",
-      "Gestion des stocks et commandes simplifiée",
-      "Optimisation SEO avancée",
-    ],
-    price: "À partir de 250 000 FCFA",
-  },
-  {
-    icon: Zap,
-    title: "Refonte & Optimisation",
-    description:
-      "Amélioration des performances, du SEO, de l'accessibilité et modernisation de vos interfaces existantes.",
-    src: "/site-images/seo-illustration.jpg",
-    advantages: [
-      "Audit complet de l'existant",
-      "Amélioration drastique du temps de chargement",
-      "Mise aux normes d'accessibilité",
-      "Refonte de l'Expérience Utilisateur (UX)",
-    ],
-    price: "À partir de 80 000 FCFA",
-  },
-  {
-    icon: Shield,
-    title: "Ingénierie sur Mesure (SaaS, ERP)",
-    description:
-      "Conception architecturale de solutions digitales complexes, adaptées à la réalité du terrain et hautement scalables.",
-    src: "/site-images/website-optimisation.jpg",
-    advantages: [
-      "Architecture cloud robuste",
-      "Design System sur mesure",
-      "Maintenance continue et monitoring pendant 1 an",
-      "Formation complète de vos équipes",
-    ],
-    price: "Uniquement sur devis",
-  },
-];
+interface ServicesProps {
+  dict: {
+    title: string;
+    title_highlight: string;
+    subtitle: string;
+    cta_button: string;
+    items: Array<{
+      title: string;
+      description: string;
+      advantages: string[];
+      price: string;
+      image: string;
+    }>;
+  };
+}
 
-export default function Services() {
+// Mappage des icônes statiques (elles ne changent pas selon la langue)
+const iconMap = {
+  "Sites Vitrines": Code2,
+  "Showcase Websites": Code2,
+  "Applications Mobiles": Smartphone,
+  "Mobile Applications": Smartphone,
+  "Sites E-commerce": Globe,
+  "E-commerce Websites": Globe,
+  "Refonte & Optimisation": Zap,
+  "Redesign & Optimization": Zap,
+  "Ingénierie sur Mesure (SaaS, ERP)": Shield,
+  "Custom Engineering (SaaS, ERP)": Shield,
+};
+
+export default function Services({ dict }: ServicesProps) {
   return (
     <section id="services" className="py-24 bg-pixel-bg relative z-30">
       <div className="max-w-7xl mx-auto px-6">
         {/* En-tête de section */}
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 text-pixel-text">
-            Nos <span className="text-pixel-primary">Services</span>
+            {dict.title}{" "}
+            <span className="text-pixel-primary">{dict.title_highlight}</span>
           </h2>
           <p className="text-xl text-pixel-muted max-w-2xl mx-auto leading-relaxed">
-            Des solutions sur mesure pour transformer vos idées en produits
-            digitaux performants, que vous soyez au Burkina Faso ou partout en
-            Afrique.
+            {dict.subtitle}
           </p>
         </div>
 
         {/* Grille des services */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-          {services.map((service, index) => {
-            const Icon = service.icon;
+          {dict.items.map((service, index) => {
+            // Récupère l'icône correspondante, ou Code2 par défaut
+            const Icon =
+              iconMap[service.title as keyof typeof iconMap] || Code2;
+
             return (
               <div
                 key={index}
@@ -106,12 +62,12 @@ export default function Services() {
                 {/* Zone Image en en-tête */}
                 <div className="relative h-48 w-full overflow-hidden border-b border-pixel-border/20 bg-pixel-bg">
                   <Image
-                    src={service.src}
+                    src={`/site-images/${service.image}`}
                     alt={service.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                   />
-                  {/* Calque subtil pour intégrer l'image au thème */}
+                  {/* Calque subtil */}
                   <div className="absolute inset-0 bg-gradient-to-t from-pixel-surface to-transparent opacity-80" />
 
                   {/* Badge Icône chevauchant */}
@@ -129,7 +85,7 @@ export default function Services() {
                     {service.description}
                   </p>
 
-                  {/* Boucle corrigée : Un seul <ul> qui mappe uniquement les <li> */}
+                  {/* Avantages */}
                   <ul className="space-y-3.5 mb-10 flex-grow">
                     {service.advantages.map((advantage, idx) => (
                       <li
@@ -155,13 +111,13 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  {/* Zone Prix et Action poussée en bas */}
+                  {/* Zone Prix et Action */}
                   <div className="mt-auto pt-6 border-t border-pixel-border/20">
                     <div className="text-lg font-black text-pixel-text mb-5">
                       {service.price}
                     </div>
                     <button className="w-full py-4 px-4 rounded-2xl bg-pixel-bg border border-pixel-border/60 text-pixel-text font-semibold hover:border-pixel-primary hover:text-pixel-primary transition-all duration-300 shadow-sm hover:shadow-md">
-                      Discuter du projet
+                      {dict.cta_button}
                     </button>
                   </div>
                 </div>

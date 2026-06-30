@@ -3,6 +3,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, MapPin } from "lucide-react";
 
+interface FooterProps {
+  dict: {
+    cta_title: string;
+    cta_subtitle: string;
+    cta_button: string;
+    brand_description: string;
+    location: string;
+    copyright: string;
+    nav_title: string;
+    legal_title: string;
+    links: {
+      home: string;
+      services: string;
+      projects: string;
+      blog: string;
+      about: string;
+      contact: string;
+      legal: string;
+    };
+  };
+  locale: string;
+}
+
 const GithubIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +94,7 @@ const MailIcon = () => (
   </svg>
 );
 
-export default function Footer() {
+export default function Footer({ dict, locale }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -90,20 +113,20 @@ export default function Footer() {
 
   const footerLinks = [
     {
-      title: "Navigation",
+      title: dict.nav_title,
       links: [
-        { href: "/", label: "Accueil" },
-        { href: "#services", label: "Services" },
-        { href: "#projets", label: "Projets" },
-        { href: "/blog", label: "Blog" },
+        { href: `/${locale}`, label: dict.links.home },
+        { href: `/${locale}#services`, label: dict.links.services },
+        { href: `/${locale}#projets`, label: dict.links.projects },
+        { href: `/${locale}/blog`, label: dict.links.blog },
       ],
     },
     {
-      title: "Légal",
+      title: dict.legal_title,
       links: [
-        { href: "/a-propos", label: "À propos" },
-        { href: "/contact", label: "Contact" },
-        { href: "/mentions-legales", label: "Mentions légales" },
+        { href: `/${locale}/a-propos`, label: dict.links.about },
+        { href: `/${locale}/contact`, label: dict.links.contact },
+        { href: `/${locale}/mentions-legales`, label: dict.links.legal },
       ],
     },
   ];
@@ -114,17 +137,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-white">
-            Prêt à donner vie à votre projet ?
+            {dict.cta_title}
           </h2>
           <p className="text-white/60 mb-8 text-base md:text-lg">
-            Disponible pour du freelance, du remote ou une opportunité en
-            entreprise.
+            {dict.cta_subtitle}
           </p>
           <Link
-            href="/contact"
+            href={`/${locale}/contact`}
             className="inline-flex items-center gap-2 bg-pixel-primary hover:bg-opacity-90 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-all hover:gap-3 shadow-lg shadow-pixel-primary/10"
           >
-            Discutons-en
+            {dict.cta_button}
             <ArrowUpRight size={18} />
           </Link>
         </div>
@@ -149,14 +171,11 @@ export default function Footer() {
                 </span>
               </div>
               <p className="text-white/60 mb-5 max-w-md text-sm leading-relaxed">
-                Développeur Full Stack spécialisé dans la conception
-                d'applications Next.js, React Native et d'architectures modernes
-                avec Prisma. Basé à Ouagadougou, disponible en remote partout
-                dans le monde.
+                {dict.brand_description}
               </p>
               <div className="flex items-center gap-2 text-white/40 text-xs tracking-wide">
                 <MapPin size={14} className="text-pixel-primary" />
-                <span>Ouagadougou, Burkina Faso</span>
+                <span>{dict.location}</span>
               </div>
             </div>
 
@@ -188,7 +207,7 @@ export default function Footer() {
       <div className="border-t border-white/5 bg-black/10">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/40">
-            © {currentYear} Pixel Faso. Tous droits réservés.
+            © {currentYear} Pixel Faso. {dict.copyright}
           </p>
 
           <div className="flex items-center gap-3">

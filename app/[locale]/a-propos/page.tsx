@@ -1,6 +1,5 @@
 // app/a-propos/page.tsx
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+
 import {
   Code2,
   Award,
@@ -27,8 +26,6 @@ export default function AProposPage() {
 
   return (
     <>
-      <Navbar />
-
       <main className="pt-24 bg-pixel-bg text-pixel-text min-h-screen">
         {/* Section Hero Intitutionnelle */}
         <section className="py-20 border-b border-pixel-border/20 bg-pixel-surface/40">
@@ -220,8 +217,6 @@ export default function AProposPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }
